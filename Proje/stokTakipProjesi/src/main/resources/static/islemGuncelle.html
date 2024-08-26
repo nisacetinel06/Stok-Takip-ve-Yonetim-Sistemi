@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İşlem Güncelle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('isdemir_back.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ccc;
+            object-fit: cover;
+            position: absolute;
+            top: -75px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-container h2 {
+            margin-top: 50px;
+            color: #a10000;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-container input[type="number"],
+        .form-container input[type="datetime-local"],
+        .form-container input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-container input[type="number"]:focus,
+        .form-container input[type="datetime-local"]:focus,
+        .form-container input[type="text"]:focus {
+            border-color: #a10000;
+            outline: none;
+        }
+
+        .form-container button {
+            background-color: #a10000;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .form-container button:hover {
+            background-color: #870000;
+            transform: translateY(-2px);
+        }
+
+        .form-container button:active {
+            background-color: #a10000;
+            transform: translateY(0);
+        }
+
+        .form-container .error,
+        .form-container .success {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .form-container .error {
+            color: red;
+        }
+
+        .form-container .success {
+            color: green;
+        }
+
+    .back-button {
+        display: block;
+        background-color: #ccc;
+        color: black;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        margin-top: 20px;
+        width: fit-content;
+    }
+
+    .back-button:hover {
+        background-color: #999;
+    }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <img src="isdemir.jpg" alt="Logo" class="logo">
+    <h2>İşlem Güncelle</h2>
+
+    <form id="islemGuncelleForm">
+        <input type="number" id="id" placeholder="İşlem ID" required>
+        <input type="number" id="kullanici_id" placeholder="Kullanıcı ID" required>
+        <input type="number" id="urun_id" placeholder="Ürün ID" required>
+        <input type="datetime-local" id="islem_tarihi" required>
+        <input type="text" id="islem_turu" placeholder="İşlem Türü" required>
+        <input type="number" id="miktar" placeholder="Miktar" required>
+        <button type="button" onclick="guncelleIslem()">Güncelle</button>
+        <a href="girisEkranı.html" class="back-button">Geri</a>
+    </form>
+    <div class="error" id="error-message"></div>
+    <div class="success" id="success-message"></div>
+</div>
+
+<script>
+    function formatDateForTimestamp(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
+        const hours = ('0' + date.getHours()).slice(-2);
+        const minutes = ('0' + date.getMinutes()).slice(-2);
+        const seconds = ('0' + date.getSeconds()).slice(-2);
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    function guncelleIslem() {
+        const id = document.getElementById("id").value;
+        const kullanici_id = document.getElementById("kullanici_id").value;
+        const urun_id = document.getElementById("urun_id").value;
+        const islem_tarihi = document.getElementById("islem_tarihi").value;
+        const islem_turu = document.getElementById("islem_turu").value;
+        const miktar = document.getElementById("miktar").value;
+        const formattedIslemTarihi = formatDateForTimestamp(islem_tarihi);
+        const islem = {
+            id: parseInt(id),
+            kullanici_id: parseInt(kullanici_id),
+            urun_id: parseInt(urun_id),
+            islem_tarihi: formattedIslemTarihi,
+            islem_turu: islem_turu,
+            miktar: parseInt(miktar)
+        };
+
+        fetch('http://localhost:8080/PUT/KullaniciUrunPut', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(islem)
+        })
+        .then(response => response.json())
+        .then(data => {
+            const errorMessageDiv = document.getElementById("error-message");
+            const successMessageDiv = document.getElementById("success-message");
+            errorMessageDiv.style.display = "none";
+            successMessageDiv.style.display = "none";
+
+            if (data.status === "success") {
+                successMessageDiv.textContent = data.message;
+                successMessageDiv.style.display = "block";
+                  window.location.href = 'islemListe.html';
+            } else {
+                errorMessageDiv.textContent = data.message;
+                errorMessageDiv.style.display = "block";
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+</body>
+</html>

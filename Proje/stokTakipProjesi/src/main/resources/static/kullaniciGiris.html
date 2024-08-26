@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Giriş</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('isdemir_back.jpg') no-repeat center center fixed;
+            background-size: cover; /* Arka plan görselinin sayfanın tamamını kaplamasını sağlar */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .logo {
+            width: 150px; /* Logonun genişliği */
+            height: auto; /* Yüksekliği otomatik olarak ayarlar */
+            border-radius: 50%; /* Logoyu tamamen yuvarlatır */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* İsteğe bağlı: logoya gölge ekler */
+            border: 2px solid #ccc; /* İsteğe bağlı: logonun etrafına ince bir çerçeve ekler */
+            object-fit: cover; /* Görselin içinde düzgün görünmesini sağlar */
+            position: absolute;
+            top: -75px; /* Logoyu formun üstüne kaydırır */
+            left: 50%; /* Logonun soldan uzaklığı */
+            transform: translateX(-50%); /* Logoyu tam ortalar */
+        }
+        .login-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            margin: 0 auto;
+            text-align: center; /* İçeriği ortalar */
+            position: relative; /* Form içindeki konumlandırmayı ayarlamak için gerekli */
+        }
+        .login-container h2 {
+            margin-top: 50px; /* Başlığın logonun altına kaydırılması için boşluk ekler */
+            color: #a10000; /* Kullanıcı Girişi başlığını kırmızı yap */
+            text-align: center;
+            color: #a10000; /* Kullanıcı Girişi başlığını kırmızı yap */
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .login-container input[type="text"],
+        .login-container input[type="password"],
+        .login-container input[type="tel"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        .login-container input[type="text"]:focus,
+        .login-container input[type="password"]:focus,
+        .login-container input[type="text"]:focus {
+            border-color: #a10000;
+            outline: none;
+        }
+        .login-container button {
+            background-color: #a10000; /* Kaydet butonunu kırmızı olur */
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+        .login-container button:hover {
+            background-color: #870000;
+            transform: translateY(-2px);
+        }
+        .login-container button:active {
+            background-color: #a10000;
+            transform: translateY(0);
+        }
+         .back-button {
+        display: block;
+        background-color: #ccc;
+        color: black;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        margin-top: 20px;
+        width: fit-content;
+    }
+
+    .back-button:hover {
+        background-color: #999;
+    }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <img src="isdemir.jpg" alt="Logo" class="logo">
+    <h2>Müşteri Kaydı</h2>
+    <form id="kulliciTablo"  method="POST">
+        <input type="text" id="ad" name="ad" placeholder="Ad" required>
+        <input type="text" id="soyad" name="soyad" placeholder="Soyad" required>
+        <input type="text" id="telefon" name="telefon" placeholder="Telefon" required>
+        <input type="password" id="sifre" name="sifre" placeholder="Şifre" required>
+        <button id="girisbutonu" type="submit">Kaydet</button>
+        <a href="girisEkranı.html" class="back-button">Geri</a>
+    </form>
+</div>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#kulliciTablo').on('submit',function (event) {
+        event.preventDefault();
+        let ad= $("#ad").val();
+        let soyad = $("#soyad").val();
+        let telefon = $("#telefon").val();
+        let sifre = $("#sifre").val();
+
+        console.log('Ad:', ad);
+        console.log('Soyad:', soyad);
+        console.log('Telefon:', telefon);
+        console.log('Şifre:', sifre);
+
+        let save = {
+            ad:ad,
+            soyad: soyad,
+            telefon: telefon,
+            sifre: sifre,
+        };
+        console.table(save);
+        $.ajax({
+            url: "http://localhost:8080/POST/KullaniciPost",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(save),
+            success: function (response, textStatus, xhr) {
+                console.log('Sunucu Yanıtı:', response);
+                console.log(xhr.status);
+                if (xhr.status === 200) {
+                    console.log('Data saved successfully:', response);
+                    alert(response.message); // JSON'daki message alanını kullanarak alert gösterin
+                     window.location.href = 'kullaniciListe.html';
+
+                } else {
+                    console.log('Unexpected status code:', xhr.status);
+                    alert("Beklenmeyen bir durum oluştu. Lütfen tekrar deneyin.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error Status:", status);
+                console.error("XHR:", xhr);
+                console.error("Error:", error);
+                alert("Veri kaydetme işleminde bir sorun oluştu. Lütfen tekrar deneyin.");
+            }
+        });
+    })
+</script>
+

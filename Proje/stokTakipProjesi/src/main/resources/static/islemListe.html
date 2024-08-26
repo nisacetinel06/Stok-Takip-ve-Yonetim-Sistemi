@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İşlem Kayıtları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ececec, #a1a1a1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #a10000;
+            font-size: 36px;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(135deg, #a10000 50%, #870000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: #a10000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #a10000;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease;
+        }
+
+        td:hover {
+            background-color: #e0e0e0; /* Hücre üzerine gelindiğinde arka plan rengi */
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            background-color: #a10000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .action-buttons button:hover {
+            background-color: #870000;
+        }
+
+        .add-button {
+            display: block;
+            background-color: #a10000;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 20px auto;
+            width: fit-content;
+            text-decoration: none;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .add-button:hover {
+            background-color: #870000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>İşlem Kayıtları</h1>
+    </div>
+    <table id="islemKayitlariTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Kullanıcı ID</th>
+            <th>Ürün ID</th>
+            <th>İşlem Tarihi</th>
+            <th>İşlem Türü</th>
+            <th>Miktar</th>
+            <th>İşlemler</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- İşlem kayıtları burada listelenecek -->
+        </tbody>
+    </table>
+    <a class="add-button" href="islemEkle.html">Yeni İşlem Kaydı Ekle</a>
+</div>
+
+<script>
+    // İşlem kayıtlarını çeken işlev
+    function fetchIslemKayitlari() {
+        fetch("http://localhost:8080/GET/KullaniciUrunGet")
+            .then(response => response.json())
+            .then(data => {
+                const islemKayitlariTable = document.getElementById('islemKayitlariTable').getElementsByTagName('tbody')[0];
+                islemKayitlariTable.innerHTML = ''; // Tabloyu temizle
+
+                data.forEach(islem => {
+                    const row = islemKayitlariTable.insertRow();
+                    row.insertCell(0).innerText = islem.id;
+                    row.insertCell(1).innerText = islem.kullanici_id;
+                    row.insertCell(2).innerText = islem.urun_id;
+                    row.insertCell(3).innerText = new Date(islem.islem_tarihi).toLocaleString(); // Tarihi yerel formatta göster
+                    row.insertCell(4).innerText = islem.islem_turu;
+                    row.insertCell(5).innerText = islem.miktar;
+
+                    const actionCell = row.insertCell(6);
+                    actionCell.classList.add('action-buttons');
+
+                    const updateButton = document.createElement('button');
+                    updateButton.innerText = 'Güncelle';
+                    updateButton.onclick = () => updateIslemKaydi(islem.id); // ID parametresiyle çağır
+                    actionCell.appendChild(updateButton);
+                });
+            });
+    }
+
+    // İşlem kaydını güncellemek için işlev
+    function updateIslemKaydi(id) {
+        window.location.href = `islemGuncelle.html?id=${id}`; // ID parametresi ile yönlendirme
+    }
+
+    // Sayfa yüklendiğinde işlem kayıtlarını getir
+    window.onload = fetchIslemKayitlari;
+</script>
+
+</body>
+</html>

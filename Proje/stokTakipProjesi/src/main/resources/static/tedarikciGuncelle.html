@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tedarikçi Güncelle</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url('isdemir_back.jpg') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .logo {
+        width: 150px;
+        height: auto;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: 2px solid #ccc;
+        object-fit: cover;
+        position: absolute;
+        top: -75px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .form-container {
+        background-color: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        width: 320px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+    }
+    .form-container h2 {
+        margin-top: 50px;
+        color: #a10000;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="number"],
+    .form-container input[type="password"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+    }
+    .form-container input[type="text"]:focus,
+    .form-container input[type="number"]:focus,
+    .form-container input[type="password"]:focus {
+        border-color: #a10000;
+        outline: none;
+    }
+    .form-container button {
+        background-color: #a10000;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+        transition: background-color 0.3s ease, transform 0.2s;
+    }
+    .form-container button:hover {
+        background-color: #870000;
+        transform: translateY(-2px);
+    }
+    .form-container button:active {
+        background-color: #a10000;
+        transform: translateY(0);
+    }
+    #responseMessage {
+        margin-top: 20px;
+        font-size: 16px;
+    }
+      .back-button {
+        display: block;
+        background-color: #ccc;
+        color: black;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        margin-top: 20px;
+        width: fit-content;
+    }
+
+    .back-button:hover {
+        background-color: #999;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <img src="isdemir.jpg" alt="Logo" class="logo">
+  <h2>Tedarikçi Bilgilerini Güncelle</h2>
+  <form id="updateForm">
+    <input type="number" id="id" name="id" placeholder="Tedarikçi ID" required>
+    <input type="text" id="ad" name="ad" placeholder="Ad" required>
+    <input type="text" id="iletisim" name="iletisim" placeholder="İletişim Bilgileri" required>
+    <button type="submit">Güncelle</button>
+    <a href="girisEkranı.html" class="back-button">Geri</a>
+  </form>
+  <div id="responseMessage"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $('#updateForm').on('submit', function (event) {
+      event.preventDefault();
+
+      let id = $("#id").val();
+      let ad = $("#ad").val();
+      let iletisim = $("#iletisim").val();
+
+      let data = {
+          id: id,
+          ad: ad,
+          iletisim_bilgileri: iletisim
+      };
+
+      $.ajax({
+          url: "http://localhost:8080/PUT/TedarikciPut" + id, // API URL'ini buraya ekleyin
+          type: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(data),
+          success: function (response, textStatus, xhr) {
+              if (xhr.status === 200) {
+                  $('#responseMessage').text('Güncelleme başarılı!');
+                    window.location.href = 'tedarikciListe.html';
+              } else {
+                  $('#responseMessage').text('Beklenmeyen bir durum oluştu. Lütfen tekrar deneyin.');
+              }
+          },
+          error: function (xhr, status, error) {
+              $('#responseMessage').text('Güncelleme işlemi sırasında bir hata oluştu.');
+          }
+      });
+  });
+</script>
+
+</body>
+</html>
+

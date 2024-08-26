@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tedarikçiler</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ececec, #a1a1a1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #a10000;
+            font-size: 36px;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(135deg, #a10000 50%, #870000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: #a10000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #a10000;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease;
+        }
+
+        td:hover {
+            background-color: #e0e0e0; /* Hücre üzerine gelindiğinde arka plan rengi */
+        }
+
+        .add-button {
+            display: block;
+            background-color: #a10000;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 20px auto;
+            width: fit-content;
+            text-decoration: none;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .add-button:hover {
+            background-color: #870000;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            background-color: #a10000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .action-buttons button:hover {
+            background-color: #870000;
+        }
+
+        .action-buttons button.delete {
+            background-color: #c12e2a;
+        }
+
+        .action-buttons button.delete:hover {
+            background-color: #a12b26;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Tedarikçiler</h1>
+    </div>
+    <table id="tedarikciTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ad</th>
+            <th>İletişim Bilgileri</th>
+            <th>İşlemler</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Tedarikçiler burada listelenecek -->
+        </tbody>
+    </table>
+    <a class="add-button" href="tedarikciEkle.html">Yeni Tedarikçi Ekle</a>
+</div>
+
+<script>
+    // Tedarikçileri çeken işlev
+    function fetchTedarikciler() {
+        fetch("http://localhost:8080/GET/TedarikciGet")
+            .then(response => response.json())
+            .then(data => {
+                const tedarikciTable = document.getElementById('tedarikciTable').getElementsByTagName('tbody')[0];
+                tedarikciTable.innerHTML = ''; // Tabloyu temizle
+
+                data.forEach(tedarikci => {
+                    const row = tedarikciTable.insertRow();
+                    row.insertCell(0).innerText = tedarikci.id;
+                    row.insertCell(1).innerText = tedarikci.ad;
+                    row.insertCell(2).innerText = tedarikci.iletisim_bilgileri;
+
+                    const actionCell = row.insertCell(3);
+                    actionCell.classList.add('action-buttons');
+
+                    const updateButton = document.createElement('button');
+                    updateButton.innerText = 'Güncelle';
+                    updateButton.onclick = () => updateTedarikci();
+                    actionCell.appendChild(updateButton);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerText = 'Sil';
+                    deleteButton.classList.add('delete');
+                    deleteButton.onclick = () => deleteTedarikci(tedarikci.id);
+                    actionCell.appendChild(deleteButton);
+                });
+            })
+            .catch(error => console.error('Error fetching tedarikciler:', error));
+    }
+
+    // Tedarikçiyi güncellemek için işlev
+    function updateTedarikci() {
+        window.location.href = 'tedarikciGuncelle.html';
+    }
+
+    function deleteTedarikci(id) {
+        fetch("http://localhost:8080/DELETE/TedarikciDelete", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id: id })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(`HTTP error! Status: ${response.status}. Message: ${text}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                location.reload(); // Sayfayı yenile
+            } else {
+                alert(data.message || 'Bir hata oluştu.');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Tedarikçi silinirken bir hata oluştu.');
+        });
+    }
+
+    // Sayfa yüklendiğinde tedarikçileri getir
+    window.onload = fetchTedarikciler;
+</script>
+</body>
+</html>
