@@ -26,6 +26,7 @@ Ana Sayfa: Ana sayfada menüler aracılığıyla ürünler, müşteriler, işlem
 Ürünler Sayfası: Ürün ekleyebilir, güncelleyebilir ve silebilirsiniz. Stok seviyelerini takip edebilirsiniz.
 Müşteriler Sayfası: Müşteri bilgilerini yönetebilir ve listeleyebilirsiniz.
 
+
 ![Ekran görüntüsü 2024-08-26 154745](https://github.com/user-attachments/assets/57b5af99-5848-4c41-8b7c-bf308b2a5f1b)
 ![Ekran görüntüsü 2024-08-26 154754](https://github.com/user-attachments/assets/9fa31b91-07bc-47dc-bdb5-11fffbc9184d)
 ![Ekran görüntüsü 2024-08-26 154805](https://github.com/user-attachments/assets/458b5745-f38d-47bc-9b26-966b45cd2f96)
@@ -42,8 +43,8 @@ Müşteriler Sayfası: Müşteri bilgilerini yönetebilir ve listeleyebilirsiniz
 ![Ekran görüntüsü 2024-08-26 154953](https://git
 ![Ekran görüntüsü 2024-08-26 155030](https://github.com/user-attachments/assets/59c03076-d738-4e81-a1d2-d1e84f96ede8)
 h
-![Uploading Ekran görüntüsü 2024-08-26 155018.png…]()
-ub.
+![Ekran görüntüsü 2024-08-26 155010](https://github.com/user-attachments/assets/fcb65ed6-7645-43bf-8d46-26b29c0e4c5e)
+
 ![Ekran görüntüsü 2024-08-26 155010](https://github.com/user-attachments/assets/358f4cf7-75d6-4bab-a545-cbabc4c53617)
 com/user-attachments/assets/e05c81fe-3ec9-4d28-bc68-eb16ba1815eb)
 a16-e61cb040198f)
@@ -51,3 +52,4 @@ a16-e61cb040198f)
 ![Ekran görüntüsü 2024-08-26 154914](https://github.com/user-attachments/assets/ca80f40d-7c78-4fc3-b90b-a93e1c989a02)
 f-8dc0-71bef7a1ca93)
 6-87a4-39c3a39d5120)
+
