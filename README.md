@@ -35,4 +35,8 @@ Ana Sayfa: Ana sayfada menüler aracılığıyla ürünler, müşteriler, işlem
 Müşteriler Sayfası: Müşteri bilgilerini yönetebilir ve listeleyebilirsiniz.
 
 
+![Ekran görüntüsü 2024-08-26 154745](https://github.com/user-attachments/assets/df13f21e-17a3-4c3d-b16a-26887db1e447)
+![Ekran görüntüsü 2024-08-26 154754](https://github.com/user-attachments/assets/26050015-3028-4c34-ac20-d9d7c0828c18)
+
+
 
