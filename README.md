@@ -37,6 +37,9 @@ Müşteriler Sayfası: Müşteri bilgilerini yönetebilir ve listeleyebilirsiniz
 
 ![Ekran görüntüsü 2024-08-26 154745](https://github.com/user-attachments/assets/df13f21e-17a3-4c3d-b16a-26887db1e447)
 ![Ekran görüntüsü 2024-08-26 154754](https://github.com/user-attachments/assets/26050015-3028-4c34-ac20-d9d7c0828c18)
+![Ekran görüntüsü 2024-08-26 154805](https://github.com/user-attachments/assets/c32ed3bf-d9d6-41e6-9e6d-afb8a488847b)
+![Ekran görüntüsü 2024-08-26 154815](https://github.com/user-attachments/assets/dc86aed0-4042-4cb2-adcb-0e93f3bafc10)
+![Ekran görüntüsü 2024-08-26 154825](https://github.com/user-attachments/assets/00803120-14ce-40b9-9e38-6bd27ed607d6)
 
 
 
