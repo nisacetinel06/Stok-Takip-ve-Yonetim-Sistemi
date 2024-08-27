@@ -43,5 +43,11 @@ Müşteriler Sayfası: Müşteri bilgilerini yönetebilir ve listeleyebilirsiniz
 ![Ekran görüntüsü 2024-08-26 154838](https://github.com/user-attachments/assets/491d41e3-0335-4ed7-946f-ef4b438ffdf4)
 ![Ekran görüntüsü 2024-08-26 154851](https://github.com/user-attachments/assets/b78e206c-810d-4645-b6a5-855349c2c13c)
 ![Ekran görüntüsü 2024-08-26 154901](https://github.com/user-attachments/assets/5c0e1c59-a2d4-4013-92ac-97d959e7f936)
-
+![Ekran görüntüsü 2024-08-26 154914](https://github.com/user-attachments/assets/6da85c2c-fd2d-47cd-9ea4-3b4f20bcbe31)
+![Ekran görüntüsü 2024-08-26 154927](https://github.com/user-attachments/assets/7e783a11-d8b9-4bd5-bce6-2d9418b42eed)
+![Ekran görüntüsü 2024-08-26 154939](https://github.com/user-attachments/assets/46b72b52-dc6f-4fe4-8e68-616394e6a618)
+![Ekran görüntüsü 2024-08-26 154953](https://github.com/user-attachments/assets/b36ac0ca-3cfa-4fb0-adbe-b6a5bc9034ae)
+![Ekran görüntüsü 2024-08-26 155010](https://github.com/user-attachments/assets/a66a2a13-b435-40ec-baac-edca0a37e665)
+![Ekran görüntüsü 2024-08-26 155018](https://github.com/user-attachments/assets/e2565d07-1d8d-4dcb-9cf2-bf84a830fad5)
+![Ekran görüntüsü 2024-08-26 155030](https://github.com/user-attachments/assets/32eba0c3-4eb2-4058-966b-92e4eb13f977)
 
